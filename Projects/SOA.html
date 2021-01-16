@@ -1,0 +1,247 @@
+<html lang="fr">
+    <head>
+        <meta charset=UTF-8>
+        <title>Portfolio Lorine Pose</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="js.js"></script>
+        <link rel="stylesheet" media="screen" href="./cssProjects.css" type="text/css"/>
+        <script src="https://kit.fontawesome.com/9cfc28e4e3.js" crossorigin="anonymous"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /> -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+    </head><link href="https://fonts.googleapis.com/icon?family=Material+IconsMaterial+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
+
+    <body>
+      <div class="material-icon back"><a href="../Portfolio.html#portfolio" >keyboard_arrow_left</a></div>
+      <div class="home">
+        <div class="homeText">
+          <div class="projectTitle">SERVICE ORIENTED <br>ARCHITECTURE</div>
+          <div class="info">
+            <div class="t"><span clas="t2">24</span><br><span class="t1">Hours</span></div>
+            <div class="t"><span clas="t2">04</span><br><span class="t1">Labs</span></div>
+            <div class="t"><span clas="t2">02</span><br><span class="t1">Partner</span></div>
+          </div>
+        </div>
+      </div>
+
+
+<div class="P">
+
+  <ul class="accordion">
+  <li class="accordion-item is-active">
+    <h1 class="accordion-thum">Context and description</h1>
+    <p class="accordion-panel">
+      SOA, or service-oriented architecture, defines a way to make software components reusable via service interfaces. These interfaces use common communication standards in such a way that they can be rapidly incorporated into new applications without having to perform deep integration each time.
+      <br><br>During this project, we had to develop a Web application (Proof-of-Concept) for managing INSA's rooms. This application allows automatic closing windows, doors, turning on heating, turning off lights, ... It relies on software services, sensors, and actuators. The goal is to retrieve data from sensors and analyse them to enable taking decisions.
+      <br>This project also gave us the opportunity to work using the Agile method through Jira software, improving our teamwork skills. From the beginning of the project, we created the sprints and tried to distribute the work efficiently.
+    </p>
+  </li>
+</ul>
+<h1>Technical Aspects</h1>
+  <ul class="accordion">
+    <p class="intro">
+      Through software services (Restful Web services), the application retrieves data of sensors (temperature, presence, ...), and according to the values of the retrieved data, actions on actuators can be triggered. This application is based on a Restful architecture.
+      <br><br>
+      The more important task of this project was probably to define clearly the conception of the different architectures of the project: the  OM2M architecture which defines the resource tree in which the sensors and actuators data is stored, the Services architecture which retrieve the data, process it, and act on the different scenarios implemented by interacting with the actuators via OM2M.
+    </p>
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">OM2M architecture</h3>
+<div class="accordion-panel">
+      <p>
+        Following what we learned during the <a class="link" href="Middleware.html">Middleware for IoT</a> class, we build the following resource tree.
+        <div class="img"><img src="./images/SOA1.png"></img><p class=figure>Figure 1 : OM2M architecture</p></div>
+
+  		</p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Services architecture</h3>
+      <div class="accordion-panel">
+  		<p>
+        We used SpringBoot to create our 3 different services:
+        <ul>
+          <li>ClassroomManagement: manages all the information concerning the actuators and sensors of the rooms</li>
+          <li>ScenarioManagement: implements the different scenarios and runs them periodically</li>
+          <li>InterfaceManagement: service as an intermediary between the OM2M platform and the dashboard</li>
+        </ul>
+        <br>
+        Each service is composed of several classes which have multiple functions as you can see in the figures below.
+        <div class="img"><img src="./images/SOA2.png"></img>
+        <p class="figure">Figure 2: ClassroomManagement Service architecture</p></div>
+        <div class="img"><img src="./images/SOA3.png"></img>
+        <p class="figure">Figure 3: ScenarioManagement Service architecture</p></div>
+        One of the main features of the services was the functions that allow to retrieve and post data on OM2M which are implemented in the actuator (post and get) and sensor (only get) classes, that you can see in the code below:
+        <br>
+        <br>
+        <div class="code">
+          <pre>
+            <code>
+  <span class="words">public</span> <span class="type">void</span> postDataOM2M(<span class="type">int</span>data){
+    <span class="type">RestTemplate </span>rest <span class="words">= new </span><span class="type">RestTemplate</span>();
+    <span class="type">HttpHeaders </span>headers <span class="words">= new </span><span class="type">HttpHeaders</span>();
+    headers.<span class="function">setContentType</span>(<span class=type>MediaType</span>.<span class="type">APPLICATION_JSON</span>);
+    headers.<span class="function">set</span>(<span class="string">"x-m2m-origin"</span>,<span class="string">"admin:admin"</span>);
+    headers.<span class="function">set</span>(<span class="string">"Content-Type"</span>,<span class="string">"application/xml;ty=4"</span>);
+    <span class="type">String </span>body <span class="words">= </span><span class="string">"&#60;m2m:cin xmlns:m2m=\"http://www.onem2m.org/xml/protocols\"&#62;\n&#60;cnf&#62;application/xml&#60;/cnf&#62;\n&#60;con&#62;";</span>
+    body<span class="words">+=</span><span class="type">Integer</span>.<span class="function">toString</span>(data);
+    body<span class="words">+=</span><span class="string">"&#60;/con&#62;\n&#60;/m2m:cin&#62;"</span>;
+    <span class="type">HttpEntity</span>&#60;<span class="type">String</span>&#62; entity <span class="words">= new </span><span class="type">HttpEntity</span>&#60;<span class="type">String</span>&#62;(body,headers);
+
+    <span class="type">ResponseEntity</span>&#60;<span class="string">String</span>&#62; Data </span><span class="words">= </span>rest.<span class="function">exchange</span>(
+      <span class="string">"http://localhost:8080/~/"</span><span class="words">+</span><span class="this">this</span>.url<span class="words">+</span><span class="string">"/DATA"</span>, <span class="type">HttpMethod</span>.<span class="type">POST</span>, entity, <span class="type">String</span>.class);
+    <span class="type">System</span>.out.<span class="function">prinln</span>(<span class="type">Data</span>.<span class="function">getBody</span>());
+  }</code>
+      </pre>
+        </div>
+        <br>
+      This function is then used in the different services provided such as getClassroomInfo(String room), which retrieve all the information from a specific room. This function is called by the function getAllClassroomInfo() which give the information relevant to all the classrooms. Below you can find an example of the implementation of one of the services provided.
+      <br><br>
+      <div class="code">
+        <pre>
+          <code>
+  @<span class="type">CrossOrigin</span>(<span class="this">origins </span><span class="words">= </span><span class="string">"*"</span>)
+  @<span class="type">GetMapping</span>(<span class="string">"/classrooms/info"</span>)
+  <span class="words">public</span> <span class="type">ListClassroom</span> getAllClassroomInfo(){
+    <span class="type">ArrayList</span>&#60;<span class="type">Classroom</span>&#62; classrooms <span class="words">= new </span><span class="type">ArrayList</span>&#60;<span class="type">Classroom</span>&#62;();
+    <span class="words">for </span>(<span class="type">int </span>i<span class="words">=</span><span class="type">0</span>; i<span class="words">&#60; </span>ports.length;i<span class="words">++</span>){
+      classrooms.<span class="function">add</span>(<span class="function">getClassroomInfo</span>(portRoomAssociation[i][<span class="type">1</span>]));
+    }
+    <span class="type">ListClassroom </span>lc<span class="words">= new </span><span class="type">ListClassroom</span>(classrooms);
+    <span class="words">return </span>lc;
+  }</code>
+    </pre>
+      </div>
+
+      The scenarioManagement service implements all the scenarios that we choose such as turning on the heating if the temperature of the room is below 15 degrees or switch ON the lights of a room if the presence sensor detects someone. These scenarios are then called in the mainResource class which is a periodical controller. It will get all the information from the rooms thanks to the ClassroomMagement service and  call the scenarios periodically for all the rooms depending on the day and the time. For instance, the heating will turn ON if the temperature is below 15 degrees, but only if it is a workday and that it is between 7 am and 8pm.
+
+      </p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Dashboard and interface management</h3>
+      <div class="accordion-panel">
+    		<p >
+          The Dashboard is a HTML page where the user will be able to see information about the rooms and to interact with actuators. In order to facilitate the work, we used a bootstrap framework to make the website.
+          <div class="img"><img src="./images/SOA4.png"></img><p class=figure>Figure 4: Application dashboard</p></div>
+          In order to get that information to display it, it will call the classroomManagement service. We refreshed that information periodically using the function setInterval() from the JavaScript file.
+          <br>If the user wants to interact with the actuators it can use the different toggles that allow to switch on and off the lights and the windows. The JavaScript code associated to the html page calls the interfaceMangement service we presented earlier. Basically, from the JavaScript file we do a REST request GET to http://localhost:8083/POST/Room1/Light1/1. The interfaceManagement service will then make a post request to OM2M that will set the Light1, of the Room1, ON.
+        </p>
+      </div>
+    </li>
+
+  <li class="accordion-item ">
+    <h1 class="accordion-thum">Difficulties and skills mobilized </h1>
+    <div class="accordion-panel">
+    <p>
+      The main challenge during this project was the conception of the architecture. Since it was the first time I developed this kind of project, I did not know all its possibilities and/or limitations. It was hard to know from the beginning all the functions and services that will be needed and even harder to know which option would be the most suitable for this project. I had to learn on the fly, adapting the project along the way. Also, adapting the sprints and the tasks of Jira.
+      <br>Another issue we faced was REST requests from the dashboard in JavaScript which could not be done directly onto the OM2M resource tree because of access rights. It is the reason we implemented an interfaceManagement Service. We did also have issues with accessing the services created, from the JavaScript file because of the access rights, until at one point we discovered that it sufficed to add @CrossOrigin(origins = "*") before defining our microservices. Nonetheless, in our case, we gave access to the service to all the origins which is not secure and in real case scenarios should not be implemented this way.
+      <br><br>During this project I improved my skills of java and JavaScript programming languages (to a lesser extent in html and CSS) as well as my knowledge of REST services using Spring Boot. Also, I could work again on OM2M.
+      <div class="skillsItems">
+        <div class="skill">Implementation of REST services</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill REST"></div></div>
+        <div class="skill">Programming : Java, JavaScript</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill Prog_SOA"></div></div>
+        <div class="skill">OM2M</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill OM2M"></div></div>
+
+      </div>
+    </p>
+  </div>
+  </li>
+
+  <li class="accordion-item">
+    <h1 class="accordion-thum">Analytical Aspects</h1>
+    <div class="accordion-panel">
+      <div class="help">
+        <b>Levels :</b><br>
+        <br>
+        <ul>
+        <li><b>AP</b>: level of application: follow-up of instructions or procedures</li>
+        <li><b>AN</b>: level of analysis: improvement or optimization of solutions or proposals</li>
+        <li><b>M</b>: level of proficiency: program design or specification definitions</li>
+        <li><b>EX</b>: level of expertise: definition of orientations or strategies</li>
+        <br>
+      </ul>
+        <b>Modes</b> : <b>IT</b>: Initial training -- <b>PE</b>: Peer exchange -- <b>ST</b>: Self training
+        <br><br>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th class="col1">Skills</th>
+            <th class="col2">Experience</th>
+            <th class="col3">Mode</th>
+            <th>Level</th>
+          </tr>
+        <thead>
+        <tbody>
+          <tr>
+            <td class="col1">Know how to define a Service Oriented Architecture</td>
+            <td class="col2">During this course I learned different ways to build a WebService, from SOAP Web services to Restful Web services or using a Spring Boot framework. From that knowledge I can define a Service Oriented Architecture which will best fit the application needed.</td>
+            <td>IT</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Deploy an SOA with web services</td>
+            <td class="col2">During the project, I deployed a Service Oriented Architecture composed of several microservices calling each other in order to impelment an application for the automatic management of rooms at INSA.</td>
+            <td>IT</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Deploy and configure an SOA using SOAP</td>
+            <td class="col2">During the course, we did several exercices to deploy and configure SOAP Web services.</td>
+            <td>IT</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Interact with the different resources of the architecture using REST services</td>
+            <td class="col2">During the labs, I interacted with the architecture I deployed using Postman, but also nodeRed. At some point, in another course I also used REST services through eclipse with java to interact with om2m (Service Oriented Architecture).</td>
+            <td>IT,ST</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Deploy and configure an SOA using REST</td>
+            <td class="col2">During the course, and the project, I deployed and configure a SOA using REST. I actually used REST requests making it possible for the microservices to communicate in java. Also I implemented a dashboard with REST requests to those microservices in javascript.</td>
+            <td>IT,ST,PE</td>
+            <td>EX</td>
+           </tr>
+           <tr>
+             <td class="col1">Integrate a process manager in an SOA</td>
+             <td class="col2">During the course, I studied the concept of process mangement in SOA for instance with BPEL(Business Process Execution Language). I could implement it, if needed in a SOA.</td>
+             <td>IT</td>
+             <td>AN</td>
+            </tr>
+            <tr>
+              <td class="col1">Define the different phases in software development</td>
+              <td class="col2">We studied the different phases in Software Development during class mainly using the Agile method which allow a project to be viable at most steps of the development.</td>
+              <td>IT</td>
+              <td>M</td>
+             </tr>
+             <tr>
+               <td class="col1">Know the different project management methods</td>
+               <td class="col2">We studied the different project management methods during class, Agile being the one that suited most of our group projects</td>
+               <td>IT</td>
+               <td>M</td>
+              </tr>
+              <tr>
+                <td class="col1">Apply one of these methods a project</td>
+                <td class="col2">During this porject we used the Agile method, using the software Jira.</td>
+                <td>IT, ST</td>
+                <td>M</td>
+               </tr>
+        </tbody>
+      </table>
+      </div>
+  </li>
+
+
+</ul>
+</div>
+
+
+<div class="download float">
+		<a href="Reports/ServiceOrientedArchitecture_Report.pdf"><i class="fas fa-arrow-alt-circle-down"></i>Complete Report</a>
+</div>
+    </body>
+</html>

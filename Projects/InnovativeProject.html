@@ -1,0 +1,170 @@
+<html lang="fr">
+    <head>
+        <meta charset=UTF-8>
+        <title>Portfolio Lorine Pose</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="js.js"></script>
+        <link rel="stylesheet" media="screen" href="./cssProjects.css" type="text/css"/>
+        <script src="https://kit.fontawesome.com/9cfc28e4e3.js" crossorigin="anonymous"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /> -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+    </head><link href="https://fonts.googleapis.com/icon?family=Material+IconsMaterial+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
+
+    <body>
+      <div class="material-icon back"><a href="../Portfolio.html#portfolio" >keyboard_arrow_left</a></div>
+      <div class="home">
+        <div class="homeText">
+          <div class="projectTitle">LOCALISATION AND<br>COMMUNICATION IOT</div>
+          <div class="info">
+            <div class="t"><span clas="t2">+90</span><br><span class="t1">Hours</span></div>
+            <div class="t"><span clas="t2">04</span><br><span class="t1">Partners</span></div>
+            <div class="t"><span clas="t2">ACTIA</span><br><span class="t1">Company</span></div>
+          </div>
+        </div>
+      </div>
+
+
+<div class="P">
+
+  <ul class="accordion">
+  <li class="accordion-item is-active">
+    <h1 class="accordion-thum">Context and description</h1>
+    <p class="accordion-panel">
+      One important part of the ISS training is a project conducted in collaboration with an actual company. In this project we have to respond to an industrial IoT problem in a multidisciplinary project raised by the company, by proposing an innovative solution that we then implement. For that purpose, we use all the skills we acquire during the semester. In the end, we were able to provide a functional Proof Of Concept. We analysed the problem, suggested a solution, and implemented it for four months.
+      <br>In my case, I worked on a project suggested by ACTIA. ACTIA is an international group that specializes in adding value to its customers by providing innovative electronics and diagnostics solutions in several areas such as health, aerospace and defence, automobile and automotive,… I had the opportunity to work in collaboration with four other students from different specialties (Electronics, Physics, Computer Science).
+      <br><br>The aim of this project is to deliver an embedded system facilitating the interaction and coordination of a team deployed on an operating area. It considers several factors such as the energetic consumption, the ergonomy, size and weight of the system, the communication rate, etc
+      <br><br>Since we signed a confidentiality agreement, I will explain the global aspect our project and the different concepts we used, without going into detail.
+    </p>
+  </li>
+</ul>
+<h1>Technical Aspects</h1>
+  <ul class="accordion">
+
+    <li class="accordion-item">
+  		<h3 class="accordion-thumb">Global description</h3>
+<div class="accordion-panel">
+      <p>The objective of the project “Localisation and Communication” is to provide a tool to make the coordination of a task force in a large outdoor space easier. Our project is more precisely targeting groups composed of one operation’s manager (a chief) and a team of operators. Equipped with an electronic dispositive (called a gateway - GW) and a digital tablet, the chief can determine the precise location of each of his operators on a map. In addition, it is possible for him to send messages and interact either with all of his team or just with one specific operator. As for the operators, they are all equipped with another electronic dispositive (called a node - ND) and a mobile phone with which they can both visualise the chief’s location and send him messages.
+      <br>
+      <div class="img">
+        <img src="./images/IP.png"></img>
+        <p class=figure>Figure 1: Global representation of the system</p>
+      </div>
+      <br>
+      Global specifications: <br>
+<ul>
+  <li>Low cost solution </li>
+  <li>Long battery life, ideally 24-hour autonomy</li>
+  <li>Lightweight (nodes and gateway carried around for hours)</li>
+  <li>4km range in perfect conditions (line of sight)</li>
+  <li>Minimum five meters accuracy for the GPS</li>
+</ul>
+<br></p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">System's choices and implementation</h3>
+      <div class="accordion-panel">
+  		<p>
+        After defining the specifications of the system, we analysed the possible solutions and choose the communication protocol that seemed the more suitable. We conclude that BLE (Bluetooth Low Energy) was the best fit for the communication between the tablet/phones and the nodes, since the connexion is short range, has low power consumption and is already included in the smartphones we would use. For the communication between the nodes and the gateway, we compared different solutions and conclude that LoRa was best. It is long range, free, and shows low energy consumption. We also chose Lopys for the nodes. It was a good match since they are lightweight, cheap, have low energy consumption and can be use for industrial production.
+        <br>Another part of the project was the data formatting. When sending a message from the node the gateway or the other way around, it was important for the message sent to be short because of LoRa’s restrictions but also because of the energy consumption. From the GPS coordinates we created a ten bytes message, including the identifier of the node sending the message, an identifier precising the type of message sent (clicked buttons or periodical localisation), and the latitude and longitude of the sending device.
+
+        <br><br>In the end, our group provided a functional proof of concept allowing one operation’s manager to send and receive messages and positioning from five operators deployed on an outdoor field.
+        <br>
+        <div class="img">
+        <img src="./images/IP1.png"></img>
+        <p class=figure>Figure 1: Proof of concept: node </p>
+        </div>
+
+</p>
+    </div>
+  	</li>
+
+
+  <li class="accordion-item ">
+    <h1 class="accordion-thum">Difficulties and skills mobilized </h1>
+    <div class="accordion-panel">
+    <p>
+      As far as I am concerned, the main challenge was the organisation. It was a big project that needed to be done mostly during our personal time in conjunction with all the other classes. Being a team of five made it hard to put our works together. During this project, I learn soft skills and technical skills by answering the needs of an industrial IoT problem in a multidisciplinary project. Indeed, we did not have time to finish all the requirements established at the beginning of the project because of the lack of time.
+      <div class="skillsItems">
+        <div class="skill">Programming : Python, C</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill Prog_PI"></div></div>
+        <div class="skill">Communication protocol : BLE</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill BLE"></div></div>
+        <div class="skill">Communication protocol: LoRa</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill lora"></div></div>
+
+
+      </div>
+    </p>
+  </div>
+  </li>
+  <li class="accordion-item">
+    <h1 class="accordion-thum">Analytical Aspects</h1>
+    <div class="accordion-panel">
+      <div class="help">
+        <b>Levels :</b><br>
+        <br>
+        <ul>
+          <li><b>AP</b>: level of application: follow-up of instructions or procedures</li>
+          <li><b>AN</b>: level of analysis: improvement or optimization of solutions or proposals</li>
+          <li><b>M</b>: level of proficiency: program design or specification definitions</li>
+          <li><b>EX</b>: level of expertise: definition of orientations or strategies</li>
+          <br>
+      </ul>
+      <b>Modes</b> : <b>IT</b>: Initial training -- <b>PE</b>: Peer exchange -- <b>ST</b>: Self training
+      <br><br>
+    </div>
+    <table>
+        <thead>
+          <tr>
+            <th class="col1">Skills</th>
+            <th class="col2">Experience</th>
+            <th class="col3">Mode</th>
+            <th>Level</th>
+          </tr>
+        <thead>
+        <tbody>
+          <tr>
+            <td class="col1">Analyse a real-life problem</td>
+            <td class="col2">The Innovative project proposed by an actual company made me analyse the problem they were facing. In our case, it was the possibility for a team to be able to communicate and to be localised at any time for 24 hours straight.</td>
+            <td>PE, ST</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Suggest a technological solution to a problem</td>
+            <td class="col2">Once the problem we faced was precisely defined we suggested to the company the solution that seemed the best fit. I can, with all the skills acquired at INSA, propose a fitting solution to a technological problem.</td>
+            <td>PE,ST,IT</td>
+            <td>EX</td>
+          </tr>
+
+          <tr>
+            <td class="col1">Implement a prototype to solve the problem</td>
+            <td class="col2">We implemented that solution adapting it when facing technical problems. At the end of ISS training we could present the Proof Of Concept of our product as it was ready-to-use.</td>
+            <td>IT,ST,PE</td>
+            <td>EX</td>
+          </tr>
+
+          <tr>
+            <td class="col1">Present and debate (in English) the technical choice made</td>
+            <td class="col2">Throughout the entire project, we had to regularly present our progress and the coices we made in our english class. This part was important since it was necessary for us to justify our choices to the company we were working for.</td>
+            <td>ST,IT</td>
+            <td>EX</td>
+          </tr>
+
+          <tr>
+            <td class="col1">Produce a report (in English) for the developed project</td>
+            <td class="col2">We wrote a report of our project for the company to know what we did in more detail. Producing a writen record is also important if the project is going to be developed further by other people.</td>
+            <td>IT,ST</td>
+            <td>EX</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+  </li>
+</ul>
+</div>
+
+<br><br><br><br>
+    </body>
+</html>

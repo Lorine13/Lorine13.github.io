@@ -1,0 +1,230 @@
+<html lang="fr">
+    <head>
+        <meta charset=UTF-8>
+        <title>Portfolio Lorine Pose</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="js.js"></script>
+        <link rel="stylesheet" media="screen" href="./cssProjects.css" type="text/css"/>
+        <script src="https://kit.fontawesome.com/9cfc28e4e3.js" crossorigin="anonymous"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /> -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+    </head><link href="https://fonts.googleapis.com/icon?family=Material+IconsMaterial+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
+
+    <body>
+      <div class="material-icon back"><a href="../Portfolio.html#portfolio" >keyboard_arrow_left</a></div>
+      <div class="home">
+        <div class="homeText">
+          <div class="projectTitle">MICROCONTROLLERS  <br>OPEN SOURCE HARDWARE</div>
+          <div class="info">
+            <div class="t"><span clas="t2">20</span><br><span class="t1">Hours</span></div>
+            <div class="t"><span clas="t2">08</span><br><span class="t1">Labs</span></div>
+            <div class="t"><span clas="t2">01</span><br><span class="t1">Partner</span></div>
+          </div>
+        </div>
+      </div>
+
+
+<div class="P">
+
+  <ul class="accordion">
+  <li class="accordion-item is-active">
+    <h1 class="accordion-thum">Context and description</h1>
+    <p class="accordion-panel">
+      A smart device is a context-aware electronic device capable of performing autonomous computing and connecting to other devices wire or wirelessly for data exchange. Its implementation involves multiple areas such as the software and hardware development or the physics involved in the different sensors present in the device.
+      <br><br>In this project, we developed a smart device based on a <a class="link" href="AIME.html">nano particle gas sensor </a>we created. First, we associated an electronic circuit to it, including a conditioner that amplified the signal in order for it to be exploitable later. Then we implemented the circuit on a Printed Circuit Board (PCB) based on an Arduino Uno shield. Coding on an Arduino, we implemented the behaviour of the device, sending the data, retrieved from the gas sensor, periodically to a TTN (The Things Network) gateway through a module LoRa. Finally, we developed a Human-Machine interface in order to make or smart device user friendly.
+      <br>
+    </p>
+  </li>
+</ul>
+<h1>Technical Aspects</h1>
+  <ul class="accordion">
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Conception of the electronic circuit </h3>
+      <div class="accordion-panel">
+        <p>
+          Once we have our gas sensor, we want to be able to exploit its data. In our case, we have a passive sensor. It detects and responds to some type of input from the physical environment, here, it is the variation of certain gas present in the environment, that will induce a variation of the resistance of the layer containing the nano particles. To measure this, we amplified and filter the signal thanks to an amplifier and a shunt resistor. We chose the LTC1050 amplifier because of its small input current and a really low voltage offset.  To this, we added three low pass filters with cut of frequencies of 16Hz, 1,6Hz and 1,6kHz.
+          <br><br>A minimalist solution with only one amplifier and a shunt resistor. However, we must choose an amplifier with a small input current (really smaller that the current delivered by the sensor) and an ultra-low voltage offset. For that, we have elected the LTC1050 amplifier.
+          <br><br>We modelized this circuit on LTSpice in which we confirmed the behaviour of the circuit by simulating the gas sensor with a first order low-pass filter in its transitional state. This circuit will induce  an output variation between 2v and 4V for an input variation of the sensor between 200nA and 400nA.
+
+          <div class="img"><img src="./images/MOSH1.png"></img>
+            <p class=figure>Figure 1: Modelling of the electronic circuit attached to the gas sensor</p>
+          </div>
+  		</p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Development of the Printed Circuit Board through KiCAD</h3>
+      <div class="accordion-panel">
+  		<p>
+        Once our sensor is ready-to-use, we developed a Printed Circuit Board (PCB). A PCB, is used to mechanically support and electrically connect electronic components using conductive pathways, tracks or signal traces etched from copper sheets laminated onto a non-conductive substrate. It is commonly used in electronics because of its compact size and the saving of wires. It is more reliable, immune to movement and presents low electronic noise.
+        <br><br>In order to implement our final circuit on the PCB using KiCad we follow two main steps:
+        <br><br>
+        <ul><li><b>Schematic’s edition</b></li></ul>
+        <br>In this phase, we simply reproduced the schematic of our circuit, associating to each element a footprint which is fundamental since the footprint will tell later the required space to allocate to each element in the shield. However, some elements are not already configured in KiCad such as our gas sensor or the LTC1050 amplifier, requiring to create additional libraries for each.
+        <div class="img"><img src="./images/MOSH2.png"></img>
+          <p class=figure>Figure 2: Schematic of the electronic circuit on KiCad</p>
+        </div>
+        <br>
+        <ul><li><b>PCB design and routing</b></li></ul>
+        <br>
+        Once the schematic if finalised, each element must be placed on the printed board. Here we directly load a shield template compatible with Arduino Uno, which we will use later to process the data. The elements and the routes that link them have been carefully chosen following several rules. The length of the lines was minimized, the routes were implemented on the bottom layer except when dealing with crossing components, the angles between the routes were preferably obtuse and the card was drilled to harmonize the ground plane.
+        <div class="img"><img src="./images/MOSH3.png"></img>
+          <p class=figure>Figure 3: Printed Circuit Board design</p>
+        </div>
+        <div class="img"><img src="./images/MOSH4.png"></img>
+          <p class=figure>Figure 4: 3D view of the PCB design</p>
+        </div>
+        <br>
+      </p>
+    </div>
+  </li>
+        <li class="accordion-item">
+          <h3 class="accordion-thumb">Software development of the device</h3>
+          <div class="accordion-panel">
+            <p>
+
+        When developing this part, we did not have yet the gas sensor so we used an industrial one. The objective was to send periodically the data retrieved from the sensor to a The Things Network gateway, an open source LoRaWAN network server stack for IoT. For that we used an Arduino Uno combined with a LoRa chip: RN2483. First, we had to configure the gateway by adding our device with the characteristics of our LoRa module. From there, we could send the information directly to the gateway.
+        <div class="img"><img src="./images/MOSH5.png"></img>
+          <p class=figure>Figure 5: View of the TTN gateway receiving the gas senor values</p>
+        </div>
+        <br>
+        Once the application is functional, we focused on the energy consumption which is one of the main challenges of IoT and smart devices. In our case, it was not relevant to send data continuously, therefore the application sent the information every ten minutes. This way, we could put to sleep both the LoRa module and the gas sensor by switching off its supply. To do that, we used NPN transistors controlled by digital outputs of the Arduino Uno. Thanks to a USB power measurement we could analyse the improvement of power consumption of our system, obtaining the following results:
+        <br><br>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Current</th>
+              <th>Voltage</th>
+              <th>Power</th>
+            </tr>
+          <thead>
+          <tbody>
+            <tr>
+              <td>Normal Mode</td>
+              <td>5,12V</td>
+              <td>0,26A</td>
+              <td>1,33W</td>
+            </tr>
+            <tr>
+              <td>Saving Mode</td>
+              <td>5,12V</td>
+              <td>0,06</td>
+              <td>0,3</td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br>
+        The energy consumption saved is high since when not sending any information, the energy consumption is down by 80%.
+        <br>
+
+      </p>
+    </div>
+  </li>
+  <li class="accordion-item">
+    <h3 class="accordion-thumb">Human Machine interface of the application with NodeRED</h3>
+    <div class="accordion-panel">
+      <p>
+        <br>
+        In this part, we developed a Human-Machine interface with NodeRED. Node-RED is a programming tool for wiring together hardware devices, APIs and online services. With the “The Things Network” palette we were able to retrieve the data posted by the Arduino on the TTN gateway, and to display it to make it user friendly. We also implemented the appearance of a popup when the gas value exceeds a defined value as shown in Figure 7.
+        <br>
+        <div class="img"><img src="./images/MOSH6.png"></img>
+          <p class=figure>Figure 6: NodeRED implementation of the HMI</p>
+        </div>
+        <br>
+        <div class="img"><img src="./images/MOSH7.png"></img>
+          <p class=figure>Figure 7: Dashboard of the gas sensor application</p>
+        </div>
+        <br>
+      </li>
+  <li class="accordion-item ">
+    <h1 class="accordion-thum">Difficulties and skills mobilized </h1>
+    <div class="accordion-panel">
+    <p>
+      During this project, the main challenge was to use KiCad to implement a PCB which is something I had never done before. Luckily, my partner in the project had experience with it thanks to a previous internship, which made this part that much easier. This project mobilized a lot of different skills which is great, as is the idea to create a device from start to finish. Nonetheless, the time dedicated to each task was not sufficient.
+      <br><br>Thanks to this class, I have improved my knowledge when it comes to electronic conditioners and the use of LTSpice. I learned the different steps to create a PCB with KiCad. Finally, this gave me the opportunity to practice and confirm my skills in C programming and NodeRED.
+      <div class="skillsItems">
+        <div class="skill">Conditioner in electronic devices: LTSpice </div>
+        <div class="total_bar_skill"><div class="partial_bar_skill LTSpice"></div></div>
+        <div class="skill">PCB implementation: KiCad </div>
+        <div class="total_bar_skill"><div class="partial_bar_skill KiCad"></div></div>
+        <div class="skill">C programming and NodeRED </div>
+        <div class="total_bar_skill"><div class="partial_bar_skill MoshProg"></div></div>
+
+      </div>
+    </p>
+  </div>
+  </li>
+
+  <li class="accordion-item">
+    <h1 class="accordion-thum">Analytical Aspects</h1>
+    <div class="accordion-panel">
+      <div class="help">
+        <b>Levels :</b><br>
+        <br>
+        <ul>
+        <li><b>AP</b>: level of application: follow-up of instructions or procedures</li>
+        <li><b>AN</b>: level of analysis: improvement or optimization of solutions or proposals</li>
+        <li><b>M</b>: level of proficiency: program design or specification definitions</li>
+        <li><b>EX</b>: level of expertise: definition of orientations or strategies</li>
+        <br>
+      </ul>
+        <b>Modes</b> : <b>IT</b>: Initial training -- <b>PE</b>: Peer exchange -- <b>ST</b>: Self training
+        <br><br>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th class="col1">Skills</th>
+            <th class="col2">Experience</th>
+            <th class="col3">Mode</th>
+            <th>Level</th>
+          </tr>
+        <thead>
+        <tbody>
+          <tr>
+            <td class="col1">Understand microcontroller archictecture and how to use them</td>
+            <td class="col2">During my studies, I had multiple opportunities to use different microcontrollers such as ESP32 chip micorcontrollers. I learned how to use them, how they work, their architecture,…</td>
+            <td>IT,ST</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Be able to design data acquisition system (sensor, conditioner, microcontroller) with respect to the application</td>
+            <td class="col2">During my studies, I participated in several project, such as the one with our gas sensor,  where I had to design a data aquisition system, retrieving data from sensors, adaping the siignal to my needs and using it through a microcontroller to answer an applciation's need, for instance activating actuators depending on the data retrieved from the sensors.</td>
+            <td>IT,ST,PE</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Be able to design the electronic circuit of a sensor’s signal conditioner (design + simulation)</td>
+            <td class="col2">During this project, I designed an electronic circuit that embedded the gas sensor that we build previously (Nano gas sensor manufacture). The circuit allowed to amplify the signal in order for the signal to be usable later on. To ckeck that the circuit would be answering the requisites I simulated it using LTSpice.</td>
+            <td>IT,PE</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Be able to design a shield to accommodate the gas sensor</td>
+            <td class="col2">During the labs, I interacted with the architecture I deployed using Postman, but also nodeRed. At some point, in another course I also used REST services through eclipse with java to interact with om2m (Service Oriented Architecture).</td>
+            <td>IT,ST</td>
+            <td>EX</td>
+          </tr>
+           <tr>
+             <td class="col1">Be abe to design the sofware to use the gas sensor and its HMI</td>
+             <td class="col2">I designed a software to use the data retrieved from the electronic circuit which process the data and act on it (sends the data to a gateway through a LoRa module for instance). I also used Node-Red to represent the data through a Human Machine Interface(HMI) for it to be user friendly.</td>
+             <td>IT,ST</td>
+             <td>EX</td>
+            </tr>
+            <tr>
+              <td class="col1">Be able to combine all of the above mentioned components into a smart device</td>
+              <td class="col2">Even though the PCB was not printed I combined all parts that could be combined and tested them. I build a smart device from scratch, going from the creation of the sensor, to the implementation of the software, the HMI and the hardware process.</td>
+              <td>IT,ST,PE</td>
+              <td>EX</td>
+             </tr>
+        </tbody>
+      </table>
+      </div>
+  </li>
+</ul>
+</div>
+<br><br><br><br>
+    </body>
+</html>

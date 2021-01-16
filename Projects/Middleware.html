@@ -1,0 +1,211 @@
+<html lang="fr">
+    <head>
+        <meta charset=UTF-8>
+        <title>Portfolio Lorine Pose</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="js.js"></script>
+        <link rel="stylesheet" media="screen" href="./cssProjects.css" type="text/css"/>
+        <script src="https://kit.fontawesome.com/9cfc28e4e3.js" crossorigin="anonymous"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /> -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+    </head><link href="https://fonts.googleapis.com/icon?family=Material+IconsMaterial+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
+
+    <body>
+      <div class="material-icon back"><a href="../Portfolio.html#portfolio" >keyboard_arrow_left</a></div>
+      <div class="home">
+        <div class="homeText">
+          <div class="projectTitle">MIDDLEWARE <br>FOR THE IOT</div>
+          <div class="info">
+            <div class="t"><span clas="t2">15</span><br><span class="t1">Hours</span></div>
+            <div class="t"><span clas="t2">04</span><br><span class="t1">Labs</span></div>
+            <div class="t"><span clas="t2">01</span><br><span class="t1">Partner</span></div>
+          </div>
+        </div>
+      </div>
+
+
+<div class="P">
+
+  <ul class="accordion">
+  <li class="accordion-item is-active">
+    <h1 class="accordion-thum">Context and description</h1>
+    <p class="accordion-panel">
+      As the Internet of Things (IoT) becomes prevalent in our daily lives, the capacity of the machines to communicate
+      with each other without humans interfering is proving to be a major concern. There are plenty of communication protocols,
+      all of them having different specifications, and being relevant in different fields of application, but more importantly not all of them being compatible with each machine or sensor. Hence the need for a standard that will allow to create a bridge between the different machines and their communication protocols, like an interpreter.
+      <br><br>In this part, we studied different communication protocols and one of those needed standards: OneM2M. OneM2M is a global standard initiative that covers requirements, architecture, API specifications, security solutions and interoperability for Machine-to-Machine and IoT technologies. One of the particularities of OneM2M is its architecture which is generic and horizontal which means that it allows a homogeneous vision of the system regardless of the field of application. Therefore, OneM2M has been thought as an interoperability enabler for the entire machine to machine and IoT ecosystem.
+      <br> We also had the opportunity to try different technologies such as the MQTT portocol, OM2M which uses the OneM2M standard, the Octave platform integrated to the MangOH Yellow, or new tools such as NodeRED to develop hight level applications.
+      <br><br>During these labs, we discovered many technologies that we used and even combined to create
+      a more complete and complex IoT system.
+    </p>
+  </li>
+</ul>
+<h1>Technical Aspects</h1>
+  <ul class="accordion">
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">MangOH Yelow and Octave</h3>
+<div class="accordion-panel">
+      <p>
+
+        First, we had the opportunity to work with a MangOH Yellow development card. It is a small, low-power, smart edge open-source hardware sensing platform developed by Sierra Wireless. This card is designed mainly for prototyping and building industrial IoT solutions and is pre-connected to mobile networks around the globe. Through the platform Octave integrated in the card, we had to design a program using the CO2 sensor of the MangOH Yellow. Depending on the value of CO2 in the air, our program sends a message to the user and lights the LED with a specified colour. We also made calls to external REST APIs to publish this data.<br><br>
+        <b>In order to do that, we divided the process in three main tasks:</b>
+        <ul>
+          <li>The establishment of <b>Observations</b>, which will read the gas sensor value and save or send the data to the cloud and the streams at a specified sampling frequency. Some simple filters can also be added to minimize the further data processing.</li><br>
+          <li>With the observations as inputs, we could define <b>Edge Actions</b>. Written in JavaScript, they allow developers to add logic on the edge, manipulate event data, combine it with other data, send it to other resources or even save it as a virtual resource. This way we could control the light color of the card depending on the previous observations.</li><br>
+          <li>Eventually, we made our system communicate with the Cloud. We used <b>Cloud Actions</b>, which provide custom cloud side logic, coded in JavaScript. The Cloud Actions are associated to a tag. Only the events incoming in the Streams of the devices with that same tag will trigger the Cloud Action. It will be able to send the data to an external Rest API in JSON format, in our case we used the webhook API.</li><br>
+        </ul>
+  		</p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">NodeMCU and MQTT</h3>
+      <div class="accordion-panel">
+  		<p>
+        In this part, we had to implement an application with MQTT protocol. With a NodeMCU board that includes one button,
+        one light and a luminosity sensor. We created a smart system that allows for the user to switch on the light manually with the button and for the light to automatically switch on when the luminosity is under 400.
+        Unlike the traditional client-server model, MQTT (Message Queuing Telemetry Transport) is a Client Server publish/subscribe messaging transport protocol. The publisher who sends the data to a certain topic and the subscriber who receives it, are never in direct contact. The published data (associated to a topic) goes through a broker, which directs messages from the publisher to all the clients that subscribed to that particular topic.
+        <div class="img"><img src="./images/middleware1.png"></img></div>
+        <p class="figure">Figure 1: Schema of the light management application</p>
+      </p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">OM2M and the standard OneM2M</h3>
+      <div class="accordion-panel">
+  		<p >
+        The oneM2M architecture is based on three different entities :
+        <ul>
+          <li>Application Entities (AE)</li>
+          <li>Common Services Entities (CSE)</li>
+          <li>Network Services Entities (NSE)</li>
+        </ul>
+        <br>The AEs represent the different applications connected to the system. The CSEs will make it possible for the applications
+        to be registered in their system and provide a set of "service functions" that are common to the Machine to Machine environments. Finally,
+        the NSEs will provide services to the CSEs besides the pure data transport.
+        <br><br>In order to deploy this architecture on a real system, we had a set of Objects (Application Dedicated Nodes -ADN-) connected to a gateway (Middle Node -MN-) which will allow the exchange of data with the server in which will run the Infrastructure Node (IN). This IN will handle the hierarchy between the different resources and the architecture.
+        <br><br>In our particular case, we used the HTTP protocol to communicate from the server, with Postman. After starting the Infrastructure Node and the Middle node, we could create (POST requests) our entire Application Dedicated Node, in this case, composed of three sensors (Luminosity, Temperature and Smart Meter). Each of this Application Entities including two containers (CNT : DATA and DESCRIPTOR). Finally, we were able to store the data in the DATA container as Constant Instances (CIN). We could easily see the resource tree created with the url http://localhost: &#60;in-port&#62;/webpage.
+
+        <div class="img"><img src="./images/middleware3.png"></img><p class=figure>Figure 2 : OM2M resource tree</p></div>
+        From Postman we were able to easily retrieve the data with GET requests. To be a little more specific, Postman makes HTTP requests such as POST (create), GET, UPDATE (modify) and DELETE. The requests require some headers such as the origin, or the content type. A body containing the necessary information will also be required depending on the type of request (POST, UPDATE...).
+      </p>
+    </div>
+  	</li>
+
+    <li class="accordion-item">
+      <h3 class="accordion-thumb">MQTT and OM2M Comparison </h3>
+      <p class="accordion-panel">
+        OM2M is deployed on objects,  gateways but also on the cloud. The data model is based on a REST architecture and a resource tree. As for the services, OneM2M is more expanded than MQTT which offers mainly one service : the management and storage of data exchanged between objects. OM2M offers several services such as Discovery, Communication, Group management, data, network… Through OM2M we can also find the publish/subscribe intrinsic aspect of the MQTT protocol with the Subscription and Notification services. Making oneM2M a standard being able to cover the MQTT standard but also the need of most part of the IoT ecosystem.
+        <br>Nonetheless, it is important to highlight that both have an important quality when it comes to interoperability since they require no specific material and can interact with several programming languages.
+      </p>
+    </li>
+
+
+    <li class="accordion-item">
+      <h3 class="accordion-thumb">Fast application prototyping for IoT with NodeRED</h3>
+      <div class="accordion-panel">
+      <p>
+        In order to develop a high-level application with both those architectures we will learn to use a new tool : <b>Node-RED</b>.
+        <br>Node-RED is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways. It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
+        <br>In this part we retrieve the last data instance produced by the simulated sensors with a oneM2M node. In order to get a sensor value, we used different nodes: Named Sensor Data  and Content extractor and Debug. For the Named Sensor Data node we needed to fill in the properties of the CSE and the name of the AE and container in which we will find the CIN we were looking for. We do the same but with MQTT , retrieving the data from the nodeMCU.
+<div class="img"><img src="./images/middleware2.png"></img><p class=figure>Figure 3 : Retrieving the value contained in a CIN of the container DATA in OM2M</p></div>
+        <br><br>Another goal we fixed ourselves here, is to develop the same application as shown in Figure 1 using the MQTT protocol, but with NodeRED.
+        More concretely, an application that will turn on the light under a specific threshold. But we also added, on the dashboard, two switches. One of them for the user to define if the light is on or off. The state of this switch is only taken into consideration if the other switch is activated. More concretely, this second switch tells the program if the first switch overrides the luminosity Sensor values.
+        <div class="img"><img src="./images/middleware5.png"></img><p class=figure>Figure 4 : Our final complex application developed with Node RED</p></div>
+        <div class="img"><img src="./images/middleware4.png"></img><p class=figure>Figure 5 : Application dashboard</p></div>
+
+      </p>
+    </div>
+    </li>
+
+
+
+
+  <li class="accordion-item ">
+    <h1 class="accordion-thum">Difficulties and skills mobilized </h1>
+    <div class="accordion-panel">
+    <p>
+      Due to the particular circumstances of the epidemic we both worked on all parts of the project separately, helping each other out when needed.
+    <br>The main challenges during this project were to apprehend many different technologies fast and to learn how to use them efficiently on their own but also as part of an IoT system.
+  <br>During this project I learned how to use the OM2M platform, but also NodeRED. I understood some of the different communication protocols available. I also had the chance to implement the MQTT protocol in one of the applications. Moreover I also improved my programming skills in C++ while using the NodeMCU that processed the MQTT messages.
+      <div class="skillsItems">
+        <div class="skill">Platform for IoT : OM2M, NodeRED</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill Prog"></div></div>
+        <div class="skill">Programming : Java, C++</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill MC"></div></div>
+
+      </div>
+    </p>
+  </div>
+  </li>
+
+  <li class="accordion-item">
+    <h1 class="accordion-thum">Analytical Aspects</h1>
+    <div class="accordion-panel">
+      <div class="help">
+        <b>Levels :</b><br>
+        <br>
+        <ul>
+        <li><b>AP</b>: level of application: follow-up of instructions or procedures</li>
+        <li><b>AN</b>: level of analysis: improvement or optimization of solutions or proposals</li>
+        <li><b>M</b>: level of proficiency: program design or specification definitions</li>
+        <li><b>EX</b>: level of expertise: definition of orientations or strategies</li>
+        <br>
+      </ul>
+        <b>Modes</b> : <b>IT</b>: Initial training -- <b>PE</b>: Peer exchange -- <b>ST</b>: Self training
+        <br><br>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th class="col1">Skills</th>
+            <th class="col2">Experience</th>
+            <th class="col3">Mode</th>
+            <th>Level</th>
+          </tr>
+        <thead>
+        <tbody>
+          <tr>
+            <td class="col1">Know how to situate the main standards for the Internet of Things</td>
+            <td class="col2">Thanks to the MOOC "Set up an architecture for conected objects with the oneM2M standard" I had the opportunity to learn about the main standards used for the Internet of Things, with a particular interest in the oneM2M standard. I did compare each standard making it possible for me to know which one will be more adequate depending on my project.</td>
+            <td>IT,ST</td>
+            <td>EX</td>
+          </tr>
+             <tr>
+            <td class="col1">Deploy an architecture compliant to an IoT standard and implement a sensor network</td>
+            <td rowspan="2" class="col2">During the labs, I applied what I learned in the previous MOOC and could deploy a oneM2M architecture with om2m, deepening, this way, my understanding of the standard. I also deployed the MQTT protocol in a different application.</td>
+            <td rowspan="2">IT,ST</td>
+            <td rowspan="2">EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Deploy and configure and IoT architecture using OM2M</td>
+          </tr>
+          <tr>
+            <td class="col1">Interact with the different resources of the architecture using REST services</td>
+            <td class="col2">During the labs, I interacted with the architecture I deployed using Postman, but also nodeRed. At some point, in another course I also used REST services through eclipse with java to interact with om2m (Service Oriented Architecture).</td>
+            <td>IT,ST</td>
+            <td>EX</td>
+          </tr>
+          <tr>
+            <td class="col1">Integrate a new technology into the deployed architecture</td>
+            <td class="col2">Thanks to nodeRED I integrated several captors and technologies to interact with each other in order to meet the needs of my application.</td>
+            <td>IT</td>
+            <td>EX</td>
+           </tr>
+        </tbody>
+      </table>
+      </div>
+  </li>
+
+
+</ul>
+</div>
+
+
+<div class="download float">
+		<a href="Reports/MiddlewareForIoT_Report.pdf"><i class="fas fa-arrow-alt-circle-down"></i>Complete Report</a>
+</div>
+    </body>
+</html>

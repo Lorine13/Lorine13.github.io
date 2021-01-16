@@ -1,0 +1,155 @@
+<html lang="fr">
+    <head>
+        <meta charset=UTF-8>
+        <title>Portfolio Lorine Pose</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="js.js"></script>
+        <link rel="stylesheet" media="screen" href="./cssProjects.css" type="text/css"/>
+        <script src="https://kit.fontawesome.com/9cfc28e4e3.js" crossorigin="anonymous"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /> -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+    </head><link href="https://fonts.googleapis.com/icon?family=Material+IconsMaterial+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
+
+    <body>
+      <div class="material-icon back"><a href="../Portfolio.html#portfolio" >keyboard_arrow_left</a></div>
+      <div class="home">
+        <div class="homeText">
+          <div class="projectTitle">CLOUD <br>COMPUTING</div>
+          <div class="info">
+            <div class="t"><span clas="t2">15</span><br><span class="t1">Hours</span></div>
+            <div class="t"><span clas="t2">04</span><br><span class="t1">Labs</span></div>
+            <div class="t"><span clas="t2">01</span><br><span class="t1">Partner</span></div>
+          </div>
+        </div>
+      </div>
+
+
+<div class="P">
+
+  <ul class="accordion">
+  <li class="accordion-item is-active">
+    <h1 class="accordion-thum">Context and description</h1>
+    <p class="accordion-panel">
+Cloud computing is the delivery of on-demand computing services from applications to storage and processing power, typically over the internet and on a pay-as-you-go basis.
+<br><br>During our labs, we deployed Infrastructures as a service (IaaS) type cloud service. It is an instant computing infrastructure, provisioned and managed over the internet. IaaS quickly scales up and down with demand, letting you pay only for what you use. It helps you avoid the expense and complexity of buying and managing your own physical servers and other datacenter infrastructure. It is one of the four types of cloud services, along with software as a service (SaaS), platform as a service (PaaS), and serverless. We tried different methods of virtualization such as virtual machines and containers. We also had the opportunity to deploy IaaS through platforms such as Docker and Openstack.
+    </p>
+  </li>
+</ul>
+<h1>Technical Aspects</h1>
+  <ul class="accordion">
+    <p class="intro">After understanding the basic concepts of cloud computing, with the different hypervisors architecture, the differences between Virtual Machines (VM) and containers (CT), the modes of network connection for VM’s and CT’s, we could apply some on them.
+    </p>
+    <li class="accordion-item">
+  		<h3 class="accordion-thumb">Deployment of a calculator application with Openstack</h3>
+<div class="accordion-panel">
+      <p>First, we used OpenStack. We created a private network and an instance connected to that network. Then we unblock the network traffic on the virtualized private network by adding security rules. In order to give our network access to the public network (internet access) we added a router that creates a bridge between the two networks.
+<br>Then we implemented a simple orchestration tool in order to provision a Web 2-tier application. The idea was to create 5 different VMs on a private network named here “PrivateNetwork”.
+<br><br>Four of these machines contained microservices for basic operations :
+<ul>
+  <li>SumService VM for addition with the local IP address 10.0.2.50 on port 50001</li>
+  <li>SubService VM for subtraction with the local IP address 10.0.2.152 on port 50002</li>
+  <li>MulService VM for multiplication with the local IP address 10.0.2.130 on port 50003</li>
+  <li>DivService VM for division with the local IP address 10.0.2.19 on port 50004</li>
+</ul>
+<br>
+The last VM is the CalculatorService on which we have downloaded and executed the CalculatorService.js file. Its local IP address is 10.0.2.230 and it uses the port 50000. This service uses the 4 microservices available on the 4 other VMs placed in the private network to make a mathematical calcul.
+<br><br>
+Then we added some complexity to the system by splitting the VM’s in two private networks. This time, the 4 microservices required by the CalculatorService are not on the same network as him.
+To make the link between these 2 private networks and with the public network, 2 routers have been added, giving the following network topology :
+<div class="img"><img src="./images/cloud1.png"></img><p class=figure>Figure 1 : Implementation of the target topology on OpenStack</p></div>
+We could then successfully manage to solve calculus in this new network topology by executing the calculator using cURL from the host machine.
+      </p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Deployment of a Calculator application with Docker</h3>
+      <div class="accordion-panel">
+  		<p>
+        In this part, we created a Virtual Machine with Virtual Box without forgetting to deploy port forwarding in order to maintain the connectivity with the host.
+From there we deployed the Docker environment and created CT’s, with images from DockerHub, but also through snapshots of our own CT’s and finally through the creation of a dockerfile.
+<br>The objective here is to reproduce the same system seen in the previous part by using Docker in an automatic way.
+First, we created a dockerfile for each service seen previously. Those dockerfiles will be built as images to implement the five dockers. Therefore, each dockerfile includes the environment necessary to run the services on the docker and the javascript file containing the service.
+Secondly, we have implemented a bash file "script.sh" (see below) that will build the docker files, run the five dockers with the created image and run the services in each docker.
+      </p>
+    </div>
+  	</li>
+
+
+  <li class="accordion-item ">
+    <h1 class="accordion-thum">Difficulties and skills mobilized </h1>
+    <div class="accordion-panel">
+    <p>
+      The main challenge during this project was the time. None of us were from the Computer Science department so it was all pretty new. It costed us a great amount of time to implement all the things seen during classes, going from theorical to practical. The labs finished before we could finish the project and we did not have time to finish completely the docker part : we had trouble accessing the microservices from another network.
+      <br><br>Nonetheless, during this course I discovered how to use and configure VirtualBox, Openstack and Docker. I also could practice programming writing he bash code for the deployment of Docker.
+<div class="skillsItems">
+        <div class="skill">Platform for Cloud Services : Docker, Openstack, VirtualBox</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill Cloud_Platforms"></div></div>
+        <div class="skill">Programming : bash</div>
+        <div class="total_bar_skill"><div class="partial_bar_skill Cloud_Prog"></div></div>
+
+      </div>
+    </p>
+  </div>
+  </li>
+
+  <li class="accordion-item">
+    <h1 class="accordion-thum">Analytical Aspects</h1>
+    <div class="accordion-panel">
+      <div class="help">
+        <b>Levels :</b><br>
+        <br>
+        <ul>
+        <li><b>AP</b>: level of application: follow-up of instructions or procedures</li>
+        <li><b>AN</b>: level of analysis: improvement or optimization of solutions or proposals</li>
+        <li><b>M</b>: level of proficiency: program design or specification definitions</li>
+        <li><b>EX</b>: level of expertise: definition of orientations or strategies</li>
+        <br>
+      </ul>
+        <b>Modes</b> : <b>IT</b>: Initial training -- <b>PE</b>: Peer exchange -- <b>ST</b>: Self training
+        <br><br>
+    </div>
+      <table>
+        <thead>
+          <tr>
+            <th class="col1">Skills</th>
+            <th class="col2">Experience</th>
+            <th class="col3">Mode</th>
+            <th>Level</th>
+          </tr>
+        <thead>
+        <tbody>
+          <tr>
+            <td class="col1">Understand the concept of cloud computing</td>
+            <td class="col2">During the classes, I learned the basic concepts of cloud computing, mainly about virtualization with containers and virtual machines</td>
+            <td>IT,ST</td>
+            <td>M</td>
+          </tr>
+             <tr>
+            <td class="col1">Use a IaaS-type cloud service</td>
+            <td class="col2">During the two labs we had, I used a Infrastructure as a service (IaaS) type cloud service</td>
+            <td>IT,PE</td>
+            <td>M</td>
+          </tr>
+
+          <tr>
+            <td class="col1">Deploy and adapt a cloud-based platform for IoT</td>
+            <td class="col2">During the labs we deployed cloud based platforms using openstack, but also docker, virtual machines and containers, that I am now able to use and adapt on different projects.</td>
+            <td>IT,PE</td>
+            <td>M</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+  </li>
+
+
+</ul>
+</div>
+
+
+<div class="download float">
+		<a href="Reports/CloudComputing_Report.pdf"><i class="fas fa-arrow-alt-circle-down"></i>Complete Report</a>
+</div>
+    </body>
+</html>

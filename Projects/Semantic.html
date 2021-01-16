@@ -1,0 +1,191 @@
+<html lang="fr">
+    <head>
+        <meta charset=UTF-8>
+        <title>SemanticWebOfThings_Portfolio</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="js.js"></script>
+        <script src="https://kit.fontawesome.com/9cfc28e4e3.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" media="screen" href="./cssProjects.css" type="text/css"/>
+        <!-- <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" /> -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,200' rel='stylesheet' type='text/css'>
+    </head><link href="https://fonts.googleapis.com/icon?family=Material+IconsMaterial+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet"/>
+
+    <body>
+      <div class="material-icon back"><a href="../Portfolio.html#portfolio" >keyboard_arrow_left</a></div>
+      <div class="home">
+        <div class="homeText">
+          <div class="projectTitle">SEMANTIC WEB<br>OF THINGS</div>
+          <div class="info">
+            <div class="t"><span clas="t2">08</span><br><span class="t1">Hours</span></div>
+            <div class="t"><span clas="t2">02</span><br><span class="t1">Labs</span></div>
+            <div class="t"><span clas="t2">01</span><br><span class="t1">Partner</span></div>
+          </div>
+        </div>
+      </div>
+
+
+<div class="P">
+
+  <ul class="accordion">
+  <li class="accordion-item is-active">
+    <h1 class="accordion-thum">Context and description</h1>
+    <p class="accordion-panel">
+      Over the past few years, the amount of information available on the internet has increased exponentially. In order to be able to find and use this information efficiently, it is necessary to organise that data and connect it. That is the purpose of an ontology. An ontology formally represents knowledge as a hierarchy of concepts within a domain, using a shared vocabulary to denotes the types, properties, and interrelationships of those concepts. They are used in many fields such as artificial intelligence, biomedical informatics, semantic web… The semantic web provides a common framework that allows data to be shared and reused across applications. It is a vision of information that can be readily interpreted by machines, so machines can find, share, and combine that information more easily without the human intervention.
+      <br><br>In these labs, we had the opportunity to implement an ontology related to meteorology with “Protégé”. We created classes and properties and linked them by forming triples. We also build a semantic-aware application able to interact with the previously implemented ontology. Making it possible to retrieve information from it but also to add individuals to it.
+    </p>
+  </li>
+</ul>
+  <h1>Technical Aspects</h1>
+  <ul class="accordion">
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Lightweight Ontology with Protege</h3>
+<div class="accordion-panel">
+      <p>
+  			In order to represent the knowledge of this ontology, first we created the classes which could implement a meteorology application. The relationship between the parent and the child classes represents a “is a” relationship. The <child class> ‘is a’ <parent class>. For instance in this case : Continent is a Place.
+          <div class="img">
+          <img src="./images/semantic1.png"></img>
+          <p class=figure>Figure 1 : classes for the meteorology application</p>
+        </div>
+        Once the classes are created, we implemented the properties that will link them. There are two type of properties. The object properties such as “is characterised by” which associates two objects or individuals and the data properties such as “has a duration” which associates an individual to a literal, in this case, an integer that will represent minutes. To specify that the unit is minutes, we used the comment field. Then we added individuals to our ontology. We implemented the multilingualism with  the label.
+      <br> The Hermit Reasoner will thank to the triples created (domain and range defined), be able to come to some easy conclusions about the type of the classes.
+    </p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Heavyweight Ontology with Protege</h3>
+      <div class="accordion-panel">
+  		<p>
+        A heavyweight ontology is simply put, a lightweight ontology which is also composed of logical axioms. We implemented those by adding characteristics to the classes and properties.
+        <br>There are several characteristics that Protégé makes easy to implement such as ‘disjoint’ for an individual that cannot be of two specific classes at the same time.
+        <br>An individual can be identified as a subclass of another class.
+        <br>Logical links can also be associated to properties : the ‘inverse of’ characteristic which opposes to properties for instance ‘is included’ and ‘includes’. The functional option allows to only define one individual to a certain property, this way a country only has one capital. The sub-property description makes sure that if a city is a capital of a country then this city in included in the country. Finally, with the Manchester syntax it is possible to define more complex characteristics (figure 1 defines a badWeather as a Phenomenon that is associated to an observation of pluviometry for which the value is greater than 0).
+        <div class="img"><img src="./images/semantic2.png" style="max-height:150px;"></img>
+          <p class="figure">Figure 2: example of Manchester syntax</p>
+        </div>
+        With this ontology, the reasoner will be able to make better and more specific conclusions about the individuals. It will react if an inconsistency is found, for instance if we define Singapour as both a city and a country when there is a ‘disjoint with’ characteristic that says that an individual cannot be a country and a city. The reasoner can prevent from making mistakes. Nonetheless, if we define Toulouse as the capital of France when Paris is already defined as its capital, the functional characteristic that allows only one capital per country will not react the way we expect. It will not throw an error but only declare that Paris and Toulouse are the same which is an inconsistency that only a human could interpret.
+      </p>
+    </div>
+  	</li>
+
+  	<li class="accordion-item">
+  		<h3 class="accordion-thumb">Ontology exploitation in eclipse</h3>
+      <div class="accordion-panel">
+  		<p>
+        In this part we develop a semantic-aware application able to annotate a dataset of meteorological data (temperature and humidity) from the city of Aarhus, in Denmark.
+<br>The data is stored in CSV files, which is at 3 stars on the Linked Data hierarchy. By using the ontology we previously created, we will make interrelated data that complies to W3C specifications. The database will then be at 5 stars on the Linked Data hierarchy.
+<br><br>We started by implementing IModelFunction in DoItYourselfModel. These functions provide knowledge-base related operations.
+<br>Just as in the case of Protégé manipulation, the API makes a distinction between the label and the URI. It is possible for objects to have the same label, that is why they have a unique URI to differentiate them, this explains the fact that the function getEntityURI(label) returns a list of URIs. In our case, since we created the ontology, we know that the labels are unique. Therefore, we can simply get the first element of the list to retrieve the URI.
+<br><br>At first, in the getInstantURI function we simply looked for the URI of an instant labelled "instant" + instant.getTimeStamp() since that is the way we decided to create the instants. Nonetheless, we decided it was better to use a more generic approach in case we are not the only ones interacting with the ontology. To do so, we decided to check the timestamp of every induvial of class Instant until we find the good Instant, only then we retrieve its URI.
+<br>In the end, implementing these functions allowed us to add the data from the csv file to our ontology. This way the data is linked in a more efficient way and can be opened in Protégé.
+
+<div class="code">
+<pre>
+  <code><span class="comment">//This function parses the list of observations extracted from the dataset</span>
+    <span class="comment">//and instanciates them in the knowledge base.</span>
+  <span class="words">public</span> <span class="type">void</span> instantiateObservations(<span class="type">List</span>&#60;<span class="type">ObservationEntity</span>&#62; obsList, <span class="type">String</span> paramURI) {
+  <span class="comment">//We keep track of the timestamp URIs created to not create it twice</span>
+    <span class="type">Map</span>&#60;<span class="type">String</span>,<span class="type">String</span>&#62; intantsMap <span class="words"> = new </span><span class="type">HashMap</span>&#60;<span class="type">String</span>, <span class="type">String</span>&#62;();
+    <span class="type">int</span> i <span class="words">=</span><span class="type">0</span>;
+    <span class="words">for </span>(<span class="type">ObservationEntity</span> oe : obsList) {
+      i<span class="words">++</span>;
+      <span class="type">System</span>.out.<span class="function">println</span>(<span class="string">"Obersation "</span><span class="words">+</span>i);
+      <span class="type">String </span>instantURI;
+  <span class="comment">//We check that the timestamp has not been previously created</span>
+  <span class="comment">//if not we create an instant with that timestamp</span>
+      <span class="words">if</span>(<span class=words>!</span>intantsMap.<span class="function">containsKey</span>(oe.<span class="function">getTimestamp</span>().<span class="function">getTimeStamp</span>())){
+        instantURI <span class="words">= </span><span class="this">this</span>.customModel.<span class="function">createInstant</span>(oe.<span class="function">getTimestamp</span>());
+        instantsMap.<span class="function">put</span>(oe.<span class="function">getTimestamp</span>().<span class="function">getTimeStamp</span>(), instantURI);
+      }<span class="words">else</span>{
+        instantURI <span class="words">= </span>instantsMap.<span class="function">get</span>(oe.<span class="function">getTimestamp</span>().<span class="function">getTimeStamp</Span>());
+      }
+  <span class="comment">//we create the observation with the previously implemented function createObs</span>
+    <span class="this">this</span>.customModel.<span class="function">createObs</span>(oe.<span class="function">getValue</span>().<span class="function">toString</span>(), paramURI, instantURI);
+  }
+}</code>
+</pre>
+</div>
+</p>
+    </div>
+  	</li>
+
+      <li class="accordion-item ">
+        <h1 class="accordion-thum">Difficulties and skills mobilized </h1>
+        <div class="accordion-panel">
+        <p>
+          Due to the particular circumstances of the epidemic we both worked on all parts of the project separately, helping each other out when needed.
+        <br>The main challenges during this project were to adapt to a predesigned code, understanding its functioning and the already implemented functions in order to use them to implement new ones.
+        <br>It was a good training since I am more comfortable starting from scratch knowing exactly what I am doing and why I am doing it this way than to use someone else’s code which is something I really struggle with.
+        <br>During this project I learned how the web data needs to be linked thanks to ontologies in order for the machines to be able to process it efficiently. I created an ontology from scratch using Protégé. I also deepened my knowledge of java by manipulating the created ontology with Eclipse.
+        <div class="skillsItems">
+            <div class="skill">Programming : Java</div>
+            <div class="total_bar_skill"><div class="partial_bar_skill SemJava"></div></div>
+            <div class="skill">Ontology manipulation : Protégé</div>
+            <div class="total_bar_skill"><div class="partial_bar_skill Protege"></div></div>
+
+          </div>
+        </p>
+      </div>
+      </li>
+
+      <li class="accordion-item">
+        <h1 class="accordion-thum">Analytical Aspects</h1>
+        <div class="accordion-panel">
+          <div class="help">
+            <b>Levels :</b><br>
+            <br>
+            <ul>
+              <li><b>AP</b>: level of application: follow-up of instructions or procedures</li>
+              <li><b>AN</b>: level of analysis: improvement or optimization of solutions or proposals</li>
+              <li><b>M</b>: level of proficiency: program design or specification definitions</li>
+              <li><b>EX</b>: level of expertise: definition of orientations or strategies</li>
+              <br>
+          </ul>
+          <b>Modes</b> : <b>IT</b>: Initial training -- <b>PE</b>: Peer exchange -- <b>ST</b>: Self training
+          <br><br>
+        </div>
+        <table>
+            <thead>
+              <tr>
+                <th class="col1">Skills</th>
+                <th class="col2">Experience</th>
+                <th class="col3">Mode</th>
+                <th>Level</th>
+              </tr>
+            <thead>
+            <tbody>
+              <tr>
+                <td class="col1">Design and understand a model for an application</td>
+                <td class="col2">During the course, I learned the utility of linked data when a big amount of data is available. I learned how to structure data efficiently with the creation of ontologies.</td>
+                <td>IT</td>
+                <td>EX</td>
+              </tr>
+              <tr>
+                <td class="col1">Know how to infer new knowlegde from a knowledge base</td>
+                <td class="col2">During the first lab, I designed an ontology for a meteorological application via Protégé, applying what I had learned.</td>
+                <td >IT</td>
+                <td >EX</td>
+              </tr>
+
+              <tr>
+                <td class="col1">Be able to enrich data with semantic meta-data</td>
+                <td class="col2">During the second lab, I used java to implement functions that automatically enrich the data linking it to our ontology.</td>
+                <td>IT,ST</td>
+                <td>M</td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+      </li>
+
+
+    </ul>
+    </div>
+
+
+    <div class="download float">
+    		<a href="Reports/SemanticWebOfThings_Report.pdf"><i class="fas fa-arrow-alt-circle-down"></i>Complete Report</a>
+    </div>
+        </body>
+    </html>

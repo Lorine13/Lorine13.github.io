@@ -4,7 +4,7 @@
   --lightGrey: #9DA5B4;
   --darkGrey:#2C313C ;
   --DARK: #414855;
-  --blue: #4488ee;
+  --blue: #FFC300;
   --color:#F8B34D;
   --gray: #4d5974;
   --orange:#0878B2;
@@ -558,8 +558,8 @@ html {
     height: 2050px;
   }
   .column {
-    width: 33.3333%;
-    height: 200px;
+    width: 50%;
+    height: 340px;
   }
   .titleSize{
     font-size: 200%;
@@ -589,7 +589,7 @@ html {
   }
   .column {
     width: 25%;
-    height: 200px;
+    height: 220px;
   }
   .titleSize{
     font-size: 200%;
@@ -610,7 +610,7 @@ html {
   }
   .column {
     width: 20%;
-    height: 200px;
+    height: 220px;
   }
   .titleSize{
     font-size: 250%;
@@ -655,7 +655,7 @@ h4 img{
 }
 .decoR{
   width:60px;
-  height:1px;
+  height:2px;
   border-radius: 40px;
   background-color: var(--blue);
   margin-top: 20px;
@@ -885,10 +885,20 @@ h4 img{
   width:60%;
 }
 .Prog{
-  width: 85%;
+  width: 70%;
 }
 .MC{
-  width: 75%;
+  width: 85%;
+}
+.OM2M{
+  width: 80%;
+}
+.KiCad{
+  width: 70%;
+}
+
+.CP{
+  width:65%;
 }
 .skill{
   margin-bottom: 20px;
@@ -1145,7 +1155,7 @@ a{
   height:100%;
   font-family: 'Raleway',sans-serif;
   margin:auto;
-  padding-top:60px;
+  padding-top:80px;
 }
 .column{
   position: relative;

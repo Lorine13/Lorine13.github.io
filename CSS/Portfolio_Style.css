@@ -4,7 +4,7 @@
   --lightGrey: #9DA5B4;
   --darkGrey:#2C313C ;
   --DARK: #414855;
-  --blue: #F8B34D;
+  --blue: #4488ee;
   --color:#F8B34D;
   --gray: #4d5974;
   --orange:#0878B2;
@@ -239,7 +239,7 @@ border-radius: 10px;
           left: 50%;
           width: 0%;
           transform: translateX(-50%);
-          height: 3px;
+          height: 2px;
           background: #FFFFFF;
           transition: .35s;
         }

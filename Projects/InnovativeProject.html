@@ -30,10 +30,10 @@
   <li class="accordion-item is-active">
     <h1 class="accordion-thum">Context and description</h1>
     <p class="accordion-panel">
-      One important part of the ISS training is a project conducted in collaboration with an actual company. In this project we have to respond to an industrial IoT problem in a multidisciplinary project raised by the company, by proposing an innovative solution that we then implement. For that purpose, we use all the skills we acquire during the semester. In the end, we were able to provide a functional Proof Of Concept. We analysed the problem, suggested a solution, and implemented it for four months.
-      <br>In my case, I worked on a project suggested by ACTIA. ACTIA is an international group that specializes in adding value to its customers by providing innovative electronics and diagnostics solutions in several areas such as health, aerospace and defence, automobile and automotive,… I had the opportunity to work in collaboration with four other students from different specialties (Electronics, Physics, Computer Science).
-      <br><br>The aim of this project is to deliver an embedded system facilitating the interaction and coordination of a team deployed on an operating area. It considers several factors such as the energetic consumption, the ergonomy, size and weight of the system, the communication rate, etc
-      <br><br>Since we signed a confidentiality agreement, I will explain the global aspect our project and the different concepts we used, without going into detail.
+      One important part of the ISS training is a project conducted in collaboration with an actual company. In this project we have to respond to an industrial IoT problem in a multidisciplinary project raised by the company, by proposing an innovative solution that we implement. For that purpose, we use all the skills we acquire during the semester. In the end, we were able to provide a functional Proof Of Concept. We analysed the problem, suggested a solution, and implemented it for four months.
+      <br><br>In my case, I worked on a project suggested by Actia. Actia is an international group that specializes in adding value to its customers by providing innovative electronics and diagnostics solutions in several areas such as health, aerospace and defence, automobile and automotive,…
+      <br>I had the opportunity to work in collaboration with four other students from different specialties (Electronics, Physics, Computer Science). The aim of this project is to deliver an embedded system facilitating the interaction and coordination of a team deployed on an operating area. It considers several factors such as the energetic consumption, the ergonomy, size and weight of the system, the communication rate, etc
+      <br><br>Since we signed a confidentiality agreement, I will explain the global aspect of our project and the different concepts we used without going into detail.
     </p>
   </li>
 </ul>
@@ -49,43 +49,36 @@
         <img src="./images/IP.png"></img>
         <p class=figure>Figure 1: Global representation of the system</p>
       </div>
-      <br>
-      Global specifications: <br>
-<ul>
-  <li>Low cost solution </li>
-  <li>Long battery life, ideally 24-hour autonomy</li>
-  <li>Lightweight (nodes and gateway carried around for hours)</li>
-  <li>4km range in perfect conditions (line of sight)</li>
-  <li>Minimum five meters accuracy for the GPS</li>
-</ul>
-<br></p>
-    </div>
-  	</li>
-
-  	<li class="accordion-item">
-  		<h3 class="accordion-thumb">System's choices and implementation</h3>
-      <div class="accordion-panel">
-  		<p>
-        After defining the specifications of the system, we analysed the possible solutions and choose the communication protocol that seemed the more suitable. We conclude that BLE (Bluetooth Low Energy) was the best fit for the communication between the tablet/phones and the nodes, since the connexion is short range, has low power consumption and is already included in the smartphones we would use. For the communication between the nodes and the gateway, we compared different solutions and conclude that LoRa was best. It is long range, free, and shows low energy consumption. We also chose Lopys for the nodes. It was a good match since they are lightweight, cheap, have low energy consumption and can be use for industrial production.
-        <br>Another part of the project was the data formatting. When sending a message from the node the gateway or the other way around, it was important for the message sent to be short because of LoRa’s restrictions but also because of the energy consumption. From the GPS coordinates we created a ten bytes message, including the identifier of the node sending the message, an identifier precising the type of message sent (clicked buttons or periodical localisation), and the latitude and longitude of the sending device.
-
-        <br><br>In the end, our group provided a functional proof of concept allowing one operation’s manager to send and receive messages and positioning from five operators deployed on an outdoor field.
-        <br>
-        <div class="img">
-        <img src="./images/IP1.png"></img>
-        <p class=figure>Figure 1: Proof of concept: node </p>
-        </div>
-
+      <br><br>
+      The project can be divided in several parts:
+      <br><br>
+      <b>Communication protocols:</b><br><br>
+      Two communication protocols have been used during this project. We chose the LoRa protocol regarding the communication between the nodes and the gateway. Indeed, LoRa technically offers the four kilometres range expected by Actia. However, tests showed us lower performances in presence of obstacles. Nonetheless, there are restrictions since we cannot use more than 1% of the bandwidth which limited us concerning the frequency at which we sent data. LoRa protocol is also a low consumption protocol which made it interesting for our system which require a high autonomy.
+      <br>Concerning the communication between the nodes/gateway and the phones/tablet, we implemented a BLE (Bluetooth Low Energy) connection. Since this was a short-range connection and that phones usually have BLE integrated it seemed to be the best choice.
+      <br><br>
+      <b>GNSS localisation and data processing:</b><br><br>
+      The localisations periodically sent to the devices were retrieved thanks to a GPS connected to the nodes and gateway. The coordinates retrieved contained degrees and minutes and had to be convert in order to be displayed later in the application. Furthermore, because of the limitations imposed by LoRa protocol we optimised the data sent in a ten bytes dataframe. We formatted the data to include the ID of the sender, the type of message sent (specified by the application) and the coordinates.
+      <br><br><b>Phone’s and tablet’s applications:</b><br><br>
+      The phone’s application displays its own location as well as the location of the gateway. It also offers the possibility to send three different type of messages with implemented buttons on the screen. This information is then sent over to the node which changes the type of the message according to the pushed button. This new information will then be sent to the gateway.
+      <br>The tablet’s application works in the same way, the only difference being that it displays all the nodes position in addition to its own.
+      <br><br><b>Energy consumption:</b><br><br>
+      In this respect, we have chosen to supply the nodes/gateway with a rechargeable LiPo (Lithium Polymer) battery as it has the best performances among all rechargeable batteries. We chose a 3000 mAh battery to supply each node because it is affordable and near to the best performance levels for embedded systems.
+      <br>As  I am writing this section, we have not finished implementing the nodes. Thus, we do not have any relevant information concerning the consumption of our final product.
+      <br><br><b>Packaging:</b><br><br>
+      As our project has a commercial dimension, we have also focused on the packaging part of the deliverables in this proof of concept. Furthermore, we have decided to include an emergency button on the case. The idea is that, in case of problems linked with the tactile interface of the phone that would make it impossible to send messages to the gateway, a physical button could do the job.
+      <div class="img">
+      <img src="./images/IP1.png"></img>
+      <p class=figure>Figure 1: Proof of concept: node </p>
+      </div>
 </p>
     </div>
   	</li>
-
 
   <li class="accordion-item ">
     <h1 class="accordion-thum">Difficulties and skills mobilized </h1>
     <div class="accordion-panel">
     <p>
-      As far as I am concerned, the main challenge was the organisation. It was a big project that needed to be done mostly during our personal time in conjunction with all the other classes. Being a team of five made it hard to put our works together. During this project, I learn soft skills and technical skills by answering the needs of an industrial IoT problem in a multidisciplinary project. Indeed, we did not have time to finish all the requirements established at the beginning of the project because of the lack of time.
+      As far as I am concerned, the main challenge was the organisation. It was a big project that needed to be done mostly during our personal time in conjunction with all the other classes. Being a team of five made it hard to put our works together. During this project, I learn soft skills and technical skills by answering the needs of an industrial IoT problem in a multidisciplinary project. Indeed, we did not have time to finish all the requirements established at the beginning of the project because of the lack of time. During this project I handled the data processing in the nodes and the application. I also tried to help when needed in other aspects of the project.
       <div class="skillsItems">
         <div class="skill">Programming : Python, C</div>
         <div class="total_bar_skill"><div class="partial_bar_skill Prog_PI"></div></div>

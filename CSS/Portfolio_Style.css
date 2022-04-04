@@ -33,7 +33,10 @@ body{
 a{
  text-decoration:none;
 }
-}
+
+
+
+
 .nav a,h2,ul {
     color: var(--lightGrey);
     font-weight: lighter;
@@ -101,6 +104,13 @@ a{
     -webkit-box-shadow: 0 8px 6px -6px #E7E7E7 inset;
 	   -moz-box-shadow: 0 8px 6px -6px #E7E7E7 inset;
 	        box-shadow: 0 0px 8px -8px #E7E7E7 inset;
+}
+
+#lastupdated {
+  color: var(--darkGrey);
+  text-align: center;
+  font-size: 80%;
+  margin-top: 5%;
 }
 #main{
   position:absolute;
